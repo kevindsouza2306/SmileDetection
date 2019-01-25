@@ -30,8 +30,9 @@ for imagePath in sorted(list(paths.list_images(args["dataset"]))):
 
     data.append(image)
 
-    label = imagePath.split(os.path.sep)[-3]
-    label = "Smiling" if not label else "Not Smiling"
+    label = imagePath.split(os.path.sep)[-2]
+    print("Printing lables value : " + label)
+    label = "Smiling" if label == "Positive" else "Not Smiling"
     labels.append(label)
 
 data = np.array(data, dtype="float") / 255.0
@@ -39,7 +40,7 @@ labels = np.array(labels)
 
 le = LabelEncoder().fit(labels)
 
-labels = np_utils.to_categorical(le.transform(labels),2)
+labels = np_utils.to_categorical(le.transform(labels), 2)
 
 classTotals = labels.sum(axis=0)
 classWeight = classTotals.max() / classTotals
@@ -60,7 +61,7 @@ print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1), ta
 print("[INFO] serializing network...")
 
 model.save(args["model"])
-#N = np.arange(0, 15)
+# N = np.arange(Negetive, 15)
 plt.style.use("ggplot")
 plt.figure()
 plt.plot(np.arange(0, 15), H.history["loss"], label="train_loss")

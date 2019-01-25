@@ -4,7 +4,6 @@ from keras.models import load_model
 import numpy as np
 import argparse
 import imutils
-import os
 import cv2
 
 ap = argparse.ArgumentParser()
@@ -34,8 +33,7 @@ while True:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     frameClone = frame.copy()
 
-    rects = detector.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30),
-                                      flags=cv2.CASCADE_SCALE_IMAGE)
+    rects = detector.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30),flags=cv2.CASCADE_SCALE_IMAGE)
 
     for (fX, fY, fW, fH) in rects:
         roi = gray[fY:fY + fH, fX:fX + fW]
